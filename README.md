@@ -1,96 +1,89 @@
-# Karachi Traffic Route Predictor 🚗
+# Karachi Traffic Route Predictor
 
-A demo AI project that predicts traffic congestion and travel time
-for 3 popular Karachi routes, and recommends the best one based on
-day, time, rain, and special events (VIP movement/protests).
+An AI-powered web application that predicts traffic congestion levels and travel times across three major Karachi routes, recommending the optimal route based on day, time, weather, and special event conditions.
 
----
+**Live App**: [https://karachi-traffic-predictor-sznlrv2zclz7xy4m3lcrpr.streamlit.app](https://karachi-traffic-predictor-sznlrv2zclz7xy4m3lcrpr.streamlit.app/)
 
-## 📁 Project Files
+## Overview
 
-| File | Purpose |
+Traffic congestion is a daily challenge in Karachi, with routes such as Sharea Faisal and II Chundrigar Road frequently experiencing significant delays during peak hours. This project demonstrates how machine learning can be applied to predict congestion patterns and assist commuters in route planning.
+
+The application uses a Random Forest model trained on simulated traffic data that reflects realistic patterns: morning and evening rush hours, weekend variations, weather-related delays, and disruptions from events such as road closures or VIP movements.
+
+## Features
+
+- Predicts congestion level (low / medium / high) and estimated travel time for three routes
+- Recommends the fastest route based on current conditions
+- Interactive route schematic with color-coded congestion indicators
+- Weekly congestion heatmap showing historical patterns by day and hour
+- Adjustable inputs for day of week, time, rainfall, and special events
+
+## Routes Covered
+
+| Route | Name |
 |---|---|
-| `generate_dataset.py` | Generates synthetic traffic data (`traffic_data.csv`) |
-| `traffic_data.csv` | The dataset (4,032 rows, 8 weeks of hourly data x 3 routes) |
-| `train_model.py` | Trains the ML models (congestion classifier + travel time regressor) |
-| `predict.py` | Standalone prediction function (command-line test) |
-| `app.py` | **Streamlit demo app** (the main thing to run for your presentation) |
-| `*.pkl` | Saved trained models + encoders |
+| A | Sharea Faisal |
+| B | II Chundrigar Road |
+| C | University Road |
+
+## Project Structure
+
+| File | Description |
+|---|---|
+| `app.py` | Streamlit web application |
+| `generate_dataset.py` | Generates the synthetic traffic dataset |
+| `train_model.py` | Trains the congestion classifier and travel time regressor |
+| `predict.py` | Standalone prediction function for testing |
+| `upload_to_huggingface.py` | Uploads trained model files to Hugging Face Hub |
+| `traffic_data.csv` | Synthetic dataset (4,032 rows covering 8 weeks of hourly data across 3 routes) |
 | `requirements.txt` | Python dependencies |
 
----
+## Installation
 
-## 🚀 How to Run
+```bash
+pip install -r requirements.txt
+```
 
-1. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
+## Usage
 
-2. (Optional) Regenerate data and retrain models — already done, but if you want to redo it:
-   ```
-   python generate_dataset.py
-   python train_model.py
-   ```
+### Run the application
 
-3. Launch the demo app:
-   ```
-   streamlit run app.py
-   ```
+```bash
+streamlit run app.py
+```
 
-4. It will open in your browser (usually `http://localhost:8501`).
+The app will open in your browser, typically at `http://localhost:8501`.
 
----
+### Regenerate data and retrain models (optional)
 
-## 🎤 Demo Script / Story (for your presentation)
+The dataset and trained models are included, but can be regenerated:
 
-**1. Hook (open with the problem):**
-> "Sharea Faisal and MA Jinnah Road are jammed again — people are stuck
-> for an hour for what should be a 15-minute drive. This wastes time,
-> fuel, and adds a lot of stress and pollution to our daily lives."
+```bash
+python generate_dataset.py
+python train_model.py
+```
 
-**2. Introduce your solution:**
-> "Cities around the world — and even parts of Karachi like DHA — are
-> starting to use AI to manage traffic smartly. I built a small AI tool
-> that predicts which route will be jammed at a given time, so you can
-> pick the best one before leaving home."
+## Model Details
 
-**3. Live Demo:**
-- Open the Streamlit app.
-- Pick a day + time (e.g., "Wednesday, 6 PM") — show how all 3 routes
-  turn red (high congestion) — this is rush hour.
-- Toggle "Rainy weather" ON — show how travel times increase further.
-- Pick a quiet time (e.g., "Sunday, 3 AM") — show all routes turn green.
-- Point at the recommended route badge.
+- **Algorithm**: Random Forest (classifier for congestion level, regressor for travel time)
+- **Features**: route, day of week, hour, rainfall indicator, special event indicator
+- **Performance**: approximately 88% accuracy for congestion level classification; mean absolute error of approximately 1.5 minutes for travel time prediction
 
-**4. Show the weekly heatmap:**
-- Switch between routes A/B/C and show the heatmap.
-- Point out: "See how mornings 7-9 AM and evenings 5-8 PM are always
-  red/orange — this matches the real rush-hour pattern in Karachi."
+## Data Source
 
-**5. Explain the model (briefly):**
-> "Behind the scenes, I trained a Random Forest model on traffic patterns
-> — it learned that certain times, days, rain, and events increase
-> congestion. It's about 88% accurate at predicting congestion level,
-> and within 1.5 minutes for travel time."
+The dataset used in this project is synthetically generated to reflect realistic Karachi traffic patterns, including peak-hour congestion (7-9 AM and 5-8 PM), reduced weekend traffic, rain-related delays, and event-driven disruptions. This approach was used in place of live traffic APIs, which typically require paid access.
 
-**6. Wrap up / future scope:**
-> "This is a simplified simulation using realistic patterns. With real
-> data from Google Maps API or local traffic sensors, this same model
-> could power a real 'Karachi Traffic Assistant' — and could even be
-> extended to control traffic signal timing automatically, like the
-> AI-based signals being piloted on II Chundrigar Road."
+## Deployment
 
----
+This application is deployed on Streamlit Community Cloud. Trained models are hosted on Hugging Face Hub and downloaded automatically at runtime, keeping the repository lightweight.
 
-## 🔧 Notes
+- **Model files**: [Hugging Face Hub](https://huggingface.co/Fizazahira/karachi-traffic-models)
+- **Source code**: hosted on GitHub
+- **Hosting**: Streamlit Community Cloud
 
-- The dataset is **synthetic** (simulated) but designed to reflect real
-  Karachi traffic patterns: rush hours (7-9 AM, 5-8 PM), weekend
-  reductions, rain delays (+25%), and event-based delays (+50%).
-- Routes used:
-  - **A**: Sharea Faisal
-  - **B**: II Chundrigar Road
-  - **C**: University Road
-- Be transparent if asked: "This uses simulated data designed to mirror
-  real traffic patterns, since live traffic APIs require paid access."
+## Future Enhancements
+
+- Integration with live traffic data sources (e.g., Google Maps API)
+- Extension to additional routes and corridors
+- Smart traffic signal timing simulation using reinforcement learning
+- Real-time alerts for sudden congestion changes due to accidents or closures
