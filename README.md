@@ -4,6 +4,17 @@ An AI-powered web application that predicts traffic congestion levels and travel
 
 **Live App**: [https://karachi-traffic-predictor-sznlrv2zclz7xy4m3lcrpr.streamlit.app](https://karachi-traffic-predictor-sznlrv2zclz7xy4m3lcrpr.streamlit.app/)
 
+## 🚀 Getting Started
+
+This app is hosted on **Streamlit Community Cloud** and may go to sleep after periods of inactivity.
+
+### Waking the App
+1. Visit the app link
+2. If you see a **"Yes, get this app back up!"** button, click it
+3. Wait **30–60 seconds** for it to fully load
+4. If you see a JavaScript error, do a **hard refresh** (`Ctrl+Shift+R` on Windows/Linux, `Cmd+Shift+R` on Mac)
+
+
 ## Overview
 
 Traffic congestion is a daily challenge in Karachi, with routes such as Sharea Faisal and II Chundrigar Road frequently experiencing significant delays during peak hours. This project demonstrates how machine learning can be applied to predict congestion patterns and assist commuters in route planning.
